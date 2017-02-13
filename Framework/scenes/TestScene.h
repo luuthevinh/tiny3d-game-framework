@@ -2,8 +2,6 @@
 
 #include "..\Tiny3D.h"
 
-class Cube;
-
 USING_NS_TINY;
 
 class TestScene : public Scene
@@ -19,4 +17,5 @@ public:
 private:
 	Cube* _testCube;
 	Camera* _camera;
+	Mesh* _mesh;
 };

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Tiny3D.h"
+#include "..\TinyDefinitions.h"
+#include "..\base\Object.h"
 
-USING_NS_TINY;
+NS_TINY_BEGIN
 
 class Cube : public Object
 {
@@ -27,9 +28,12 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 _vertexBuffer;
 	LPDIRECT3DINDEXBUFFER9 _indicesBuffer;
 	LPDIRECT3DTEXTURE9 _texture;
+	D3DMATERIAL9 _material;
 
 	Transform* _transform;
 
 	bool initVertexBuffer();
 	bool initIndicesBuffer();
 };
+
+NS_TINY_END

@@ -54,6 +54,7 @@ void Object::addComponent(const char * name, Component * component)
 		_components.at(name)->release();
 	}
 
+	component->setTarget(this);
 	_components[name] = component;
 }
 

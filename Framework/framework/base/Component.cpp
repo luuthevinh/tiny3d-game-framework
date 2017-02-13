@@ -11,6 +11,14 @@ Component::Component()
 	_target = nullptr;
 }
 
+void Component::update(float dt)
+{
+}
+
+void Component::release()
+{
+}
+
 void Component::setTarget(Object* target)
 {
 	_target = target;

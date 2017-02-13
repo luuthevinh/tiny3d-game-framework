@@ -1,7 +1,7 @@
 #include "TestScene.h"
-#include "../Cube.h"
+#include "..\framework\geometry\Cube.h"
 
-#include <functional>
+USING_NS_TINY;
 
 TestScene::TestScene()
 {
@@ -24,13 +24,9 @@ bool TestScene::init()
 		Vec3(0.0f, 1.0f, 0.0f));
 	_camera->init();
 
-	_dispatcher = SceneManager::getInstance()->getEventDispatcher();
-
-	//auto listener = new EventKeyboardListener();
-	//listener->onKeyPressed = CALLBACK_01(&TestScene::onKeyPressed, this);
-	//listener->onKeyReleased = CALLBACK_01(&TestScene::onKeyReleased, this);
-
-	//_dispatcher->addEventListener(listener, this);
+	_mesh = new Mesh();
+	_mesh->initWithXFile("airplane.x");
+	_mesh->getTransform()->setPositionX(20.0f);
 
 	return true;
 }
@@ -43,14 +39,5 @@ void TestScene::update(float dt)
 void TestScene::draw()
 {
 	_testCube->draw();
-}
-
-void TestScene::onKeyPressed(EventKeyboard::KeyCode keycode)
-{
-	OutputDebugString("key pressed!!!\n");
-}
-
-void TestScene::onKeyReleased(EventKeyboard::KeyCode keycode)
-{
-	OutputDebugString("key released!!!\n");
+	_mesh->draw();
 }

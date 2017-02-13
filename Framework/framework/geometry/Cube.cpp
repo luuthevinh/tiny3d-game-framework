@@ -1,7 +1,9 @@
 #include "Cube.h"
-#include "framework\Direct3DDevice.h"
-#include "framework\SceneManager.h"
-#include "CubeRenderer.h"
+#include "..\Direct3DDevice.h"
+#include "..\SceneManager.h"
+#include "..\Utils.h"
+
+#include "..\renderer\CubeRenderer.h"
 
 USING_NS_TINY;
 
@@ -29,6 +31,8 @@ bool Cube::init(const char* filePath)
 		return false;
 	}
 
+	_material = Utils::WHITE_MATERIAL;
+
 	D3DXCreateTextureFromFile(_device, filePath, &_texture);
 
 	_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
@@ -49,9 +53,10 @@ void Cube::draw()
 {
 	_transform->setRotateY(_transform->getRotate().y + 1.0f);
 
-	auto renderer = (CubeRenderer*)this->getComponent(Component::RENDERDER);
+	_device->SetMaterial(&_material);
 
-	renderer->draw(*_transform, _vertexBuffer, _indicesBuffer, _texture);
+	auto renderer = (CubeRenderer*)this->getComponent(Component::RENDERDER);
+	renderer->draw(_vertexBuffer, _indicesBuffer, _texture);
 }
 
 bool Cube::initVertexBuffer()

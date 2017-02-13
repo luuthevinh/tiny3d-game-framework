@@ -117,14 +117,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="CubeRenderer.cpp" />
     <ClCompile Include="Framework\Base\Component.cpp" />
     <ClCompile Include="framework\base\EventDispatcher.cpp" />
     <ClCompile Include="framework\base\EventKeyboard.cpp" />
     <ClCompile Include="framework\base\EventKeyboardListener.cpp" />
     <ClCompile Include="framework\base\EventMouse.cpp" />
     <ClCompile Include="framework\base\EventMouseListener.cpp" />
+    <ClCompile Include="framework\base\Mesh.cpp" />
     <ClCompile Include="Framework\Base\Object.cpp" />
     <ClCompile Include="Framework\Base\Renderer.cpp" />
     <ClCompile Include="framework\base\Time.cpp" />
@@ -133,6 +132,9 @@
     <ClCompile Include="Framework\Direct3DDevice.cpp" />
     <ClCompile Include="framework\DirectInputDevice.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
+    <ClCompile Include="framework\geometry\Cube.cpp" />
+    <ClCompile Include="framework\renderer\CubeRenderer.cpp" />
+    <ClCompile Include="framework\renderer\MeshRenderer.cpp" />
     <ClCompile Include="Framework\SceneManager.cpp" />
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="Framework\WindowsHelper.cpp" />
@@ -141,8 +143,6 @@
     <ClCompile Include="Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="CubeRenderer.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="Framework\Base\Component.h" />
     <ClInclude Include="framework\base\Event.h" />
@@ -152,6 +152,7 @@
     <ClInclude Include="framework\base\EventListener.h" />
     <ClInclude Include="framework\base\EventMouse.h" />
     <ClInclude Include="framework\base\EventMouseListener.h" />
+    <ClInclude Include="framework\base\Mesh.h" />
     <ClInclude Include="Framework\Base\Object.h" />
     <ClInclude Include="Framework\Base\Renderer.h" />
     <ClInclude Include="Framework\Base\Scene.h" />
@@ -162,6 +163,9 @@
     <ClInclude Include="Framework\Direct3DDevice.h" />
     <ClInclude Include="Framework\Game.h" />
     <ClInclude Include="framework\DirectInputDevice.h" />
+    <ClInclude Include="framework\geometry\Cube.h" />
+    <ClInclude Include="framework\renderer\CubeRenderer.h" />
+    <ClInclude Include="framework\renderer\MeshRenderer.h" />
     <ClInclude Include="Framework\SceneManager.h" />
     <ClInclude Include="Framework\TinyDefinitions.h" />
     <ClInclude Include="Framework\Utils.h" />

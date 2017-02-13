@@ -25,6 +25,9 @@
     <Filter Include="Source Files\framework\geometry">
       <UniqueIdentifier>{3af806c1-757f-4900-a845-1b7df23a4fed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\framework\renderer">
+      <UniqueIdentifier>{9e6fac08-5350-47f1-ade8-f7892268b8d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,9 +47,6 @@
     </ClCompile>
     <ClCompile Include="Framework\SceneManager.cpp">
       <Filter>Source Files\framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Camera.cpp">
       <Filter>Source Files\framework</Filter>
@@ -69,9 +69,6 @@
     <ClCompile Include="Framework\Base\Renderer.cpp">
       <Filter>Source Files\framework\base</Filter>
     </ClCompile>
-    <ClCompile Include="CubeRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\base\Time.cpp">
       <Filter>Source Files\framework\base</Filter>
     </ClCompile>
@@ -92,6 +89,18 @@
     </ClCompile>
     <ClCompile Include="framework\base\EventMouseListener.cpp">
       <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\base\Mesh.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\renderer\MeshRenderer.cpp">
+      <Filter>Source Files\framework\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\renderer\CubeRenderer.cpp">
+      <Filter>Source Files\framework\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\geometry\Cube.cpp">
+      <Filter>Source Files\framework\geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +134,6 @@
     <ClInclude Include="Framework\TinyDefinitions.h">
       <Filter>Source Files\framework</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Camera.h">
       <Filter>Source Files\framework</Filter>
     </ClInclude>
@@ -145,9 +151,6 @@
     </ClInclude>
     <ClInclude Include="Framework\Base\Renderer.h">
       <Filter>Source Files\framework\base</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeRenderer.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Tiny3D.h">
       <Filter>Source Files</Filter>
@@ -178,6 +181,18 @@
     </ClInclude>
     <ClInclude Include="framework\base\EventMouseListener.h">
       <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\Mesh.h">
+      <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\renderer\MeshRenderer.h">
+      <Filter>Source Files\framework\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\renderer\CubeRenderer.h">
+      <Filter>Source Files\framework\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\geometry\Cube.h">
+      <Filter>Source Files\framework\geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

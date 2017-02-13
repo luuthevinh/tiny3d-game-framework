@@ -12,6 +12,9 @@
 #include "framework\base\EventKeyboard.h"
 #include "framework\base\EventKeyboardListener.h"
 #include "framework\base\EventListener.h"
+#include "framework\base\Mesh.h"
+
+#include "framework\geometry\Cube.h"
 
 #include "framework\TinyDefinitions.h"
 #include "framework\Utils.h"

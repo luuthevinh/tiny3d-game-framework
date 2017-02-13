@@ -92,7 +92,7 @@ void Game::run()
 			while (lag >= _gameSettings->getFrameRate())
 			{
 				// update
-				SceneManager::getInstance()->update(delta);
+				SceneManager::getInstance()->update(_gameSettings->getFrameRate());
 				lag -= _gameSettings->getFrameRate();
 			}
 			
@@ -100,9 +100,9 @@ void Game::run()
 			this->draw();
 		}
 		//else
-		{
+		//{
 			//Sleep((_gameSettings->getFrameRate() - delta) * 1000.0f);
-		}
+		//}
 	}
 }
 

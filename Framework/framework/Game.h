@@ -3,8 +3,6 @@
 #include <Windows.h>
 #include "TinyDefinitions.h"
 
-class Cube;
-
 NS_TINY_BEGIN
 
 class WindowsHelper;

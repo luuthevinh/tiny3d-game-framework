@@ -15,12 +15,12 @@ public:
 	Component();
 
 	virtual bool init() = 0;
-	virtual void update(float dt) { }
-	virtual void release() { }
+	virtual void update(float dt);
+	virtual void release();
 
 	virtual void setTarget(Object* target);
 
-private:
+protected:
 	Object* _target;
 };
 
