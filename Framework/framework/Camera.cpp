@@ -256,9 +256,9 @@ void Camera::onKeyReleased(EventKeyboard::KeyCode keycode)
 
 void Camera::onMouseMoved(EventMouse * e)
 {
-	char str[128];
-	sprintf(str, "mouse: (%.2f, %.2f), delta: (%.2f, %.2f)\n", e->getPosition().x, e->getPosition().y, e->getDeltaChange().x, e->getDeltaChange().y);
-	OutputDebugString(str);
+	//char str[128];
+	//sprintf(str, "mouse: (%.2f, %.2f), delta: (%.2f, %.2f)\n", e->getPosition().x, e->getPosition().y, e->getDeltaChange().x, e->getDeltaChange().y);
+	//OutputDebugString(str);
 
 	if (e->getButton() == EventMouse::Button::BUTTON_LEFT)
 	{

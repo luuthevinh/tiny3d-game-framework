@@ -102,6 +102,12 @@
     <ClCompile Include="framework\geometry\Cube.cpp">
       <Filter>Source Files\framework\geometry</Filter>
     </ClCompile>
+    <ClCompile Include="framework\base\MeshLoader.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\base\OBJFileReader.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -193,6 +199,12 @@
     </ClInclude>
     <ClInclude Include="framework\geometry\Cube.h">
       <Filter>Source Files\framework\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\MeshLoader.h">
+      <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\OBJFileReader.h">
+      <Filter>Source Files\framework\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

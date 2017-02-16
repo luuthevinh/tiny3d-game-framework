@@ -13,6 +13,7 @@ public:
 	virtual bool init() override;
 	virtual void update(float dt) override;
 	virtual void draw() override;
+	virtual void release() override;
 
 private:
 	Cube* _testCube;

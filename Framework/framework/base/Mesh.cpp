@@ -3,6 +3,8 @@
 #include "..\renderer\MeshRenderer.h"
 #include "..\SceneManager.h"
 
+#include "MeshLoader.h"
+
 USING_NS_TINY;
 
 Mesh::Mesh()
@@ -13,7 +15,7 @@ Mesh::~Mesh()
 {
 }
 
-bool Mesh::initWithXFile(const char* filePath)
+bool Mesh::init()
 {
 	if (!Object::init())
 	{
@@ -22,107 +24,44 @@ bool Mesh::initWithXFile(const char* filePath)
 
 	_device = SceneManager::getInstance()->getDevice()->getDirec3DDevice();
 
+	// create renderer component
 	_renderer = new MeshRenderer();
 	_renderer->init();
+	//_renderer->setFillMode(Renderer::FillMode::WIREFRAME);
 
 	this->addComponent(Component::RENDERDER, _renderer);
 
-	ID3DXBuffer* adjBuffer = NULL;
-	ID3DXBuffer* mtrlBuffer = NULL;
-	LPD3DXMESH mesh;
-	DWORD numMtrls = 0;
+	return true;
+}
 
-	HRESULT result = D3DXLoadMeshFromX(
-		filePath,
-		D3DXMESH_MANAGED,
-		_device,
-		&adjBuffer,
-		&mtrlBuffer,
-		0,
-		&numMtrls,
-		&mesh
-	);
-
-	if (FAILED(result))
+bool Mesh::initWithXFile(const char* filePath)
+{
+	if (!this->init())
 	{
-		OutputDebugString("Load mesh from X FAILED!!!");
 		return false;
 	}
 
-	if (mtrlBuffer != NULL && numMtrls != 0)
+	// load from x file
+	if (!MeshLoader::loadFromXFile(this, filePath, _device))
 	{
-		D3DXMATERIAL* mtrls = (D3DXMATERIAL*)mtrlBuffer->GetBufferPointer();
-
-		for (size_t i = 0; i < numMtrls; i++)
-		{
-			// ko có ambient nên phải gán lại
-			mtrls[i].MatD3D.Ambient = mtrls[i].MatD3D.Diffuse;
-
-			// add vào vector
-			_renderer->addMaterial(mtrls[i].MatD3D);
-
-			// check coi có file texture ko
-			if (mtrls[i].pTextureFilename != 0)
-			{
-				LPDIRECT3DTEXTURE9 texture = 0;
-				D3DXCreateTextureFromFile(_device, mtrls[i].pTextureFilename, &texture);
-
-				_renderer->addTexture(texture);
-			}
-			else
-			{
-				// ko có texture cho subset này
-				_renderer->addTexture(0);
-			}
-		}
-
-		mtrlBuffer->Release();
+		return false;
 	}
 
-	if (adjBuffer != NULL)
+	return true;
+}
+
+bool Mesh::initWithOBJFile(const char * filePath)
+{
+	if (!this->init())
 	{
-		result = mesh->OptimizeInplace(
-			D3DXMESHOPT_ATTRSORT |
-			D3DXMESHOPT_COMPACT |
-			D3DXMESHOPT_VERTEXCACHE,
-			(DWORD*)adjBuffer->GetBufferPointer(),
-			0, 0, 0);
-
-		if (FAILED(result))
-		{
-			OutputDebugString("OptimizeInplace() FAILED!!!");
-			return false;
-		}
-
-		adjBuffer->Release();
+		return false;
 	}
 
-	// tính normal vector
-	if (!(mesh->GetFVF() & D3DFVF_NORMAL))
+	// load from .obj file
+	if (!MeshLoader::loadFromOBJFile(this, filePath, _device))
 	{
-		LPD3DXMESH tempMesh;
-		result = mesh->CloneMeshFVF(D3DXMESH_MANAGED, mesh->GetFVF() | D3DFVF_NORMAL, _device, &tempMesh);
-
-		if (FAILED(result))
-		{
-			OutputDebugString("CloneMeshFVF() FAILED!!!");
-			return false;
-		}
-
-		result = D3DXComputeNormals(tempMesh, 0);
-
-		if (FAILED(result))
-		{
-			OutputDebugString("D3DXComputeNormals() FAILED!!!");
-			return false;
-		}
-
-		// xóa cái cũ gán cái mới tính vào
-		mesh->Release();
-		mesh = tempMesh;
+		return false;
 	}
-
-	_renderer->setD3DMesh(mesh);
 
 	return true;
 }
@@ -130,4 +69,19 @@ bool Mesh::initWithXFile(const char* filePath)
 void Mesh::draw()
 {
 	_renderer->draw();
+}
+
+void Mesh::setD3DMesh(LPD3DXMESH mesh)
+{
+	_renderer->setD3DMesh(mesh);
+}
+
+void Mesh::addMaterial(D3DMATERIAL9 material)
+{
+	_renderer->addMaterial(material);
+}
+
+void Mesh::addTexture(LPDIRECT3DTEXTURE9 texture)
+{
+	_renderer->addTexture(texture);
 }

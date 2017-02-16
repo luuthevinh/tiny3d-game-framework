@@ -33,18 +33,27 @@ void MeshRenderer::draw()
 
 void MeshRenderer::release()
 {
-	_meshD3D->Release();
-
+	if (_meshD3D != nullptr)
+	{
+		_meshD3D->Release();
+	}
+	
 	while (_materials.size() > 0)
 	{
 		_materials.pop_back();
 	}
 
-	while (_textures.size() > 0)
+	while (!_textures.empty())
 	{
-		_textures.back()->Release();
+		if (_textures.back() != nullptr)
+		{
+			_textures.back()->Release();
+		}
+		
 		_textures.pop_back();
 	}
+
+	delete this;
 }
 
 void MeshRenderer::setD3DMesh(LPD3DXMESH mesh)

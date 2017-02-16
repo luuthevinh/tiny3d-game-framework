@@ -9,8 +9,7 @@ TestScene::TestScene()
 
 TestScene::~TestScene()
 {
-	SAFE_DELETE(_testCube);
-	SAFE_DELETE(_camera);
+	
 }
 
 bool TestScene::init()
@@ -25,7 +24,8 @@ bool TestScene::init()
 	_camera->init();
 
 	_mesh = new Mesh();
-	_mesh->initWithXFile("airplane.x");
+	//_mesh->initWithXFile("airplane.x");
+	_mesh->initWithOBJFile("resources\\cartoon_tank.obj");
 	_mesh->getTransform()->setPositionX(20.0f);
 
 	return true;
@@ -40,4 +40,11 @@ void TestScene::draw()
 {
 	_testCube->draw();
 	_mesh->draw();
+}
+
+void TestScene::release()
+{
+	_camera->release();
+	_testCube->release();
+	_mesh->release();
 }

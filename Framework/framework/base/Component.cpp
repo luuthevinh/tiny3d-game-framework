@@ -17,6 +17,7 @@ void Component::update(float dt)
 
 void Component::release()
 {
+	delete this;
 }
 
 void Component::setTarget(Object* target)

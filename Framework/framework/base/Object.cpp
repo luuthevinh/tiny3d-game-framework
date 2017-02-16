@@ -11,13 +11,6 @@ Object::Object() :
 
 Object::~Object()
 {
-	for (auto it = _components.begin(); it != _components.end(); it++)
-	{
-		it->second->release();
-		SAFE_DELETE(it->second);
-	}
-
-	_components.clear();
 }
 
 bool Object::init()
@@ -45,6 +38,13 @@ void Object::draw()
 
 void Object::release()
 {
+	for (auto it = _components.begin(); it != _components.end(); it++)
+	{
+		it->second->release();
+	}
+	_components.clear();
+
+	delete this;
 }
 
 void Object::addComponent(const char * name, Component * component)

@@ -124,7 +124,9 @@
     <ClCompile Include="framework\base\EventMouse.cpp" />
     <ClCompile Include="framework\base\EventMouseListener.cpp" />
     <ClCompile Include="framework\base\Mesh.cpp" />
+    <ClCompile Include="framework\base\MeshLoader.cpp" />
     <ClCompile Include="Framework\Base\Object.cpp" />
+    <ClCompile Include="framework\base\OBJFileReader.cpp" />
     <ClCompile Include="Framework\Base\Renderer.cpp" />
     <ClCompile Include="framework\base\Time.cpp" />
     <ClCompile Include="Framework\Base\Transform.cpp" />
@@ -153,7 +155,9 @@
     <ClInclude Include="framework\base\EventMouse.h" />
     <ClInclude Include="framework\base\EventMouseListener.h" />
     <ClInclude Include="framework\base\Mesh.h" />
+    <ClInclude Include="framework\base\MeshLoader.h" />
     <ClInclude Include="Framework\Base\Object.h" />
+    <ClInclude Include="framework\base\OBJFileReader.h" />
     <ClInclude Include="Framework\Base\Renderer.h" />
     <ClInclude Include="Framework\Base\Scene.h" />
     <ClInclude Include="Framework\Base\Size.h" />
