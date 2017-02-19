@@ -4,24 +4,25 @@
 #include <string>
 
 #include "..\TinyDefinitions.h"
-#include "MeshLoader.h"
+#include "Mesh.h"
+#include "FileReader.h"
 
 NS_TINY_BEGIN
 
-class OBJFileReader
+class OBJFileReader : public FileReader
 {
 public:
-	OBJFileReader();
+	OBJFileReader(const char* filePath);
 	~OBJFileReader();
 
-	bool readData(const char* filePath);
+	bool readData();
 
 	const std::vector<Material*>& getMaterials();
-	const std::vector<MeshLoader::VERTEX>& getVertices();
+	const std::vector<Mesh::Vertex>& getVertices();
 	const std::vector<DWORD>& getIndices();
 	const std::vector<DWORD>& getAttributes();
 
-	const char* getRelativePath();
+	unsigned int getNumberOfSubsets();
 
 private:
 	std::vector<Vec3> _positions;
@@ -29,13 +30,13 @@ private:
 	std::vector<Vec3> _normals;
 
 	std::vector<Material*> _materials;
-	std::vector<MeshLoader::VERTEX> _vertices;
+	std::vector<Mesh::Vertex> _vertices;
 	std::vector<DWORD> _indices;
 	std::vector<DWORD> _attributes;
 
-	std::string _relativePath;
+	unsigned int _numSubsets;
 
-	DWORD addVertex(UINT position, const MeshLoader::VERTEX& vertex);
+	DWORD addVertex(UINT position, const Mesh::Vertex& vertex);
 	bool readMaterialData(const char* materialPath);
 };
 

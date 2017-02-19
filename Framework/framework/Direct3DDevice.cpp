@@ -108,7 +108,7 @@ bool Direct3DDevice::init(WindowsHelper* window)
 	}
 	
 	_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	_d3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));
+	_d3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(0, 0, 0));
 	_d3dDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	_d3dDevice->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
 

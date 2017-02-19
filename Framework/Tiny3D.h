@@ -12,6 +12,8 @@
 #include "framework\base\EventKeyboard.h"
 #include "framework\base\EventKeyboardListener.h"
 #include "framework\base\EventListener.h"
+#include "framework\base\OBJFileReader.h"
+#include "framework\base\Material.h"
 #include "framework\base\Mesh.h"
 
 #include "framework\geometry\Cube.h"

@@ -1,7 +1,7 @@
 #include "Cube.h"
 #include "..\Direct3DDevice.h"
 #include "..\SceneManager.h"
-#include "..\Utils.h"
+#include "..\base\Material.h"
 
 #include "..\renderer\CubeRenderer.h"
 
@@ -15,9 +15,27 @@ Cube::Cube()
 
 Cube::~Cube()
 {
-	_texture->Release();
 	_vertexBuffer->Release();
 	_indicesBuffer->Release();
+}
+
+bool Cube::init()
+{
+	Object::init();
+
+	_device = SceneManager::getInstance()->getDevice()->getDirec3DDevice();
+	
+	if (!(this->initVertexBuffer() && this->initIndicesBuffer()))
+	{
+		return false;
+	}
+
+	auto renderer = new CubeRenderer();
+	renderer->init();
+	renderer->setMaterial(Material::WHITE_MATERIAL);
+	this->addComponent(Component::RENDERDER, renderer);
+
+	return true;
 }
 
 bool Cube::init(const char* filePath)
@@ -31,9 +49,8 @@ bool Cube::init(const char* filePath)
 		return false;
 	}
 
-	_material = Utils::WHITE_MATERIAL;
-
-	D3DXCreateTextureFromFile(_device, filePath, &_texture);
+	LPDIRECT3DTEXTURE9 texture;
+	D3DXCreateTextureFromFile(_device, filePath, &texture);
 
 	_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
@@ -41,22 +58,18 @@ bool Cube::init(const char* filePath)
 
 	auto renderer = new CubeRenderer();
 	renderer->init();
+	renderer->setTexture(texture);
+	renderer->setMaterial(Material::WHITE_MATERIAL);
 
 	this->addComponent(Component::RENDERDER, renderer);
-
-	_transform = (Transform*)this->getComponent(Component::TRANSFORM);
 
 	return true;
 }
 
 void Cube::draw()
 {
-	_transform->setRotateY(_transform->getRotate().y + 1.0f);
-
-	_device->SetMaterial(&_material);
-
 	auto renderer = (CubeRenderer*)this->getComponent(Component::RENDERDER);
-	renderer->draw(_vertexBuffer, _indicesBuffer, _texture);
+	renderer->draw(_vertexBuffer, _indicesBuffer);
 }
 
 bool Cube::initVertexBuffer()
@@ -64,35 +77,35 @@ bool Cube::initVertexBuffer()
 	// cube
 	Cube::CubeVertex vertices[] =
 	{
-		{ -5.0f, -5.0f, 5.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f },    // side 1
-		{ 5.0f, -5.0f, 5.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
-		{ -5.0f, 5.0f, 5.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
-		{ 5.0f, 5.0f, 5.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f },
+		{ -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f },    // side 1
+		{ 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
+		{ -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+		{ 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f },
 
-		{ -5.0f, -5.0f, -5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f },    // side 2
-		{ -5.0f, 5.0f, -5.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f },
-		{ 5.0f, -5.0f, -5.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f },
-		{ 5.0f, 5.0f, -5.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f },
+		{ -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f },    // side 2
+		{ -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f },
+		{ 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f },
+		{ 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f },
 
-		{ -5.0f, 5.0f, -5.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },    // side 3
-		{ -5.0f, 5.0f, 5.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f },
-		{ 5.0f, 5.0f, -5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f },
-		{ 5.0f, 5.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f },
+		{ -1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },    // side 3
+		{ -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+		{ 1.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f },
+		{ 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f },
 
-		{ -5.0f, -5.0f, -5.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f },    // side 4
-		{ 5.0f, -5.0f, -5.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f },
-		{ -5.0f, -5.0f, 5.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f },
-		{ 5.0f, -5.0f, 5.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f },
+		{ -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f },    // side 4
+		{ 1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f },
+		{ -1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f },
+		{ 1.0f, -1.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f },
 
-		{ 5.0f, -5.0f, -5.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f },    // side 5
-		{ 5.0f, 5.0f, -5.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f },
-		{ 5.0f, -5.0f, 5.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
-		{ 5.0f, 5.0f, 5.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f },
+		{ 1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f },    // side 5
+		{ 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f },
+		{ 1.0f, -1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+		{ 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f },
 
-		{ -5.0f, -5.0f, -5.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f },    // side 6
-		{ -5.0f, -5.0f, 5.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
-		{ -5.0f, 5.0f, -5.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f },
-		{ -5.0f, 5.0f, 5.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f },
+		{ -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f },    // side 6
+		{ -1.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+		{ -1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f },
+		{ -1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f },
 	};
 
 	// create a vertex buffer interface called v_buffer

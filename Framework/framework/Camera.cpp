@@ -21,6 +21,10 @@ Camera::Camera(const Vec3 & position, const Vec3 & eye, const Vec3 & up)
 
 	_sensitive = 0.001f;
 	_enableMouse = false;
+
+	_walkSpeed = 0.0f;
+	_strafeSpeed = 0.0f;
+	_rollSpeed = 0.0f;
 }
 
 Camera::~Camera()
@@ -49,6 +53,7 @@ void Camera::update(float dt)
 {
 	this->walk(_walkSpeed * dt);
 	this->strafe(_strafeSpeed * dt);
+	this->roll(_rollSpeed * dt);
 
 	auto device = SceneManager::getInstance()->getDevice()->getDirec3DDevice();
 
@@ -228,6 +233,16 @@ void Camera::onKeyPressed(EventKeyboard::KeyCode keycode)
 		_strafeSpeed = 20.0f;
 		break;
 	}
+	case EventKeyboard::KeyCode::KEY_Q:
+	{
+		_rollSpeed = 2.0f;
+		break;
+	}
+	case EventKeyboard::KeyCode::KEY_E:
+	{
+		_rollSpeed = -2.0f;
+		break;
+	}
 	default:
 		break;
 	}
@@ -247,6 +262,13 @@ void Camera::onKeyReleased(EventKeyboard::KeyCode keycode)
 	case EventKeyboard::KeyCode::KEY_D:
 	{
 		_strafeSpeed = 0.0f;
+		break;
+	}
+	case EventKeyboard::KeyCode::KEY_Q:
+	case EventKeyboard::KeyCode::KEY_E:
+	{
+		
+		_rollSpeed = 0.0f;
 		break;
 	}
 	default:

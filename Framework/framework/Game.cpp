@@ -52,7 +52,7 @@ bool Game::init()
 
 	light.Type = D3DLIGHT_DIRECTIONAL;
 	light.Diffuse = Color4F(1.0f, 1.0f, 1.0f, 1.0f);
-	light.Direction = Vec3(-1.0f, -1.0f, 0.0f);
+	light.Direction = Vec3(-1.0f, -1.5f, 2.0f);
 
 	_direct3d->getDirec3DDevice()->SetLight(0, &light);
 	_direct3d->getDirec3DDevice()->LightEnable(0, TRUE);
@@ -127,7 +127,7 @@ bool Game::isRunning()
 
 void Game::draw()
 {
-	_direct3d->getDirec3DDevice()->Clear(0, NULL, D3DCLEAR_TARGET, Color3B(0, 0, 0), 1.0f, 0);
+	_direct3d->getDirec3DDevice()->Clear(0, NULL, D3DCLEAR_TARGET, Color3B(100, 100, 100), 1.0f, 0);
 	_direct3d->getDirec3DDevice()->Clear(0, NULL, D3DCLEAR_ZBUFFER, Color3B(0, 0, 0), 1.0f, 0);
 
 	_direct3d->getDirec3DDevice()->BeginScene();

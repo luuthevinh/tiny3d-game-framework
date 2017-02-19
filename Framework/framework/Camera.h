@@ -67,6 +67,7 @@ private:
 
 	float _walkSpeed;
 	float _strafeSpeed;
+	float _rollSpeed;
 
 	bool _enableMouse;
 };

@@ -1,5 +1,8 @@
 #include "MeshRenderer.h"
 #include "..\base\Object.h"
+#include "..\base\Material.h"
+
+#include "..\Utils.h"
 
 USING_NS_TINY;
 
@@ -21,11 +24,6 @@ void MeshRenderer::draw()
 		_device->SetTexture(0, _textures[i]);
 
 		_meshD3D->DrawSubset(i);
-
-		// draw wireframe
-		//_device->SetMaterial(&material);
-		//_device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		//_meshD3D->DrawSubset(i);
 
 		_device->SetRenderState(D3DRS_FILLMODE, this->getFillMode());
 	}
@@ -61,12 +59,35 @@ void MeshRenderer::setD3DMesh(LPD3DXMESH mesh)
 	_meshD3D = mesh;
 }
 
-void MeshRenderer::addMaterial(D3DMATERIAL9 material)
+void MeshRenderer::addD3DMaterial(const D3DMATERIAL9& material)
 {
 	_materials.push_back(material);
+}
+
+void MeshRenderer::addMaterial(const Material & material)
+{
+	D3DMATERIAL9 d3dMaterial;
+
+	d3dMaterial.Ambient = Color4F(material.ambient.x, material.ambient.y, material.ambient.z, material.alpha);
+	d3dMaterial.Diffuse = Color4F(material.diffuse.x, material.diffuse.y, material.diffuse.z, material.alpha);
+	d3dMaterial.Specular = Color4F(material.specular.x, material.specular.y, material.specular.z, material.alpha);
+	d3dMaterial.Emissive = Color4F(material.emissive.x, material.emissive.y, material.emissive.z, material.alpha);
+	d3dMaterial.Power = material.shininess;
+
+	this->addD3DMaterial(d3dMaterial);
 }
 
 void MeshRenderer::addTexture(LPDIRECT3DTEXTURE9 texture)
 {
 	_textures.push_back(texture);
+}
+
+void MeshRenderer::setNumberOfSubsets(unsigned int number)
+{
+	_numSubset = number;
+}
+
+unsigned int MeshRenderer::getNumberOfSubsets()
+{
+	return _numSubset;
 }

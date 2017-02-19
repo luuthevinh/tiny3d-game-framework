@@ -15,7 +15,9 @@ TestScene::~TestScene()
 bool TestScene::init()
 {
 	_testCube = new Cube();
-	_testCube->init("cat.png");
+	_testCube->init();
+	_testCube->getTransform()->setScale(10.0f);
+	_testCube->getTransform()->setPositionY(-5.0f);
 
 	_camera = new Camera(
 		Vec3(20.0f, 50.0f, -45.0f),
@@ -25,8 +27,10 @@ bool TestScene::init()
 
 	_mesh = new Mesh();
 	//_mesh->initWithXFile("airplane.x");
-	_mesh->initWithOBJFile("resources\\cartoon_tank.obj");
-	_mesh->getTransform()->setPositionX(20.0f);
+	//_mesh->initWithOBJFile("resources\\cartoon_tank.obj");
+	//_mesh->initWithFile("resources\\cup.obj");
+	_mesh->initWithFile("resources\\nanosuit\\nanosuit.obj");
+	_mesh->getTransform()->setPositionY(5.0f);
 
 	return true;
 }

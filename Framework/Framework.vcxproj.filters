@@ -108,6 +108,15 @@
     <ClCompile Include="framework\base\OBJFileReader.cpp">
       <Filter>Source Files\framework\base</Filter>
     </ClCompile>
+    <ClCompile Include="framework\base\FileReader.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\base\MeshFileReader.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\base\Material.cpp">
+      <Filter>Source Files\framework\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -118,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="Framework\Direct3DDevice.h">
       <Filter>Source Files\framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Definitions.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Base\Size.h">
       <Filter>Source Files\framework\base</Filter>
@@ -205,6 +211,18 @@
     </ClInclude>
     <ClInclude Include="framework\base\OBJFileReader.h">
       <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\Material.h">
+      <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\MeshFileReader.h">
+      <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\base\FileReader.h">
+      <Filter>Source Files\framework\base</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Source Files\framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

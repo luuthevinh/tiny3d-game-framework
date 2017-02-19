@@ -1,11 +1,13 @@
 ﻿#include "OBJFileReader.h"
 #include "..\Utils.h"
 #include "MeshLoader.h"
+#include "Material.h"
+#include "Mesh.h"
 #include <fstream>
 
 USING_NS_TINY;
 
-OBJFileReader::OBJFileReader()
+OBJFileReader::OBJFileReader(const char* filePath) : FileReader(filePath)
 {
 }
 
@@ -18,13 +20,8 @@ OBJFileReader::~OBJFileReader()
 	}
 }
 
-bool OBJFileReader::readData(const char* filePath)
+bool OBJFileReader::readData()
 {
-	auto splitPath = Utils::splitString(filePath, '\\');
-
-	_relativePath = filePath;
-	_relativePath.erase(_relativePath.end() - strlen(splitPath.at(splitPath.size() - 1).c_str()), _relativePath.end());
-
 	WCHAR strMaterialFilename[MAX_PATH] = { 0 };
 	DWORD curSubset = 0;
 
@@ -33,15 +30,15 @@ bool OBJFileReader::readData(const char* filePath)
 	if (material == nullptr)
 		return false;
 
-	wcscpy_s(material->name, MAX_PATH - 1, L"default");
+	material->name = "default";
 	_materials.push_back(material);
 
 	// File input
 	WCHAR strCommand[256] = { 0 };
-	std::wifstream InFile(filePath);
+	std::wifstream InFile(_filePath);
 	if (!InFile)
 	{
-		auto output = "can't open file .obj: " + std::string(filePath);
+		auto output = "can't open file .obj: " + std::string(_filePath);
 		OutputDebugString(output.c_str());
 		return false;
 	}
@@ -81,11 +78,11 @@ bool OBJFileReader::readData(const char* filePath)
 		{
 			// Face
 			UINT iPosition, iTexCoord, iNormal;
-			MeshLoader::VERTEX vertex;
+			Mesh::Vertex vertex;
 
 			for (UINT iFace = 0; iFace < 3; iFace++)
 			{
-				ZeroMemory(&vertex, sizeof(MeshLoader::VERTEX));
+				ZeroMemory(&vertex, sizeof(Mesh::Vertex));
 
 				// OBJ xài mảng bắt đầu từ 1
 				InFile >> iPosition;
@@ -142,7 +139,7 @@ bool OBJFileReader::readData(const char* filePath)
 			for (int iMaterial = 0; iMaterial < _materials.size(); iMaterial++)
 			{
 				Material* pCurMaterial = _materials.at(iMaterial);
-				if (0 == wcscmp(pCurMaterial->name, strName))
+				if (0 == pCurMaterial->name.compare(Utils::toString(strName)))
 				{
 					bFound = true;
 					curSubset = iMaterial;
@@ -158,7 +155,7 @@ bool OBJFileReader::readData(const char* filePath)
 
 				curSubset = _materials.size();
 
-				wcscpy_s(material->name, MAX_PATH - 1, strName);
+				material->name = Utils::toString(strName);
 
 				_materials.push_back(material);
 			}
@@ -191,7 +188,7 @@ const std::vector<Material*>& OBJFileReader::getMaterials()
 	return _materials;
 }
 
-const std::vector<MeshLoader::VERTEX>& OBJFileReader::getVertices()
+const std::vector<Mesh::Vertex>& OBJFileReader::getVertices()
 {
 	return _vertices;
 }
@@ -206,12 +203,12 @@ const std::vector<DWORD>& OBJFileReader::getAttributes()
 	return _attributes;
 }
 
-const char * OBJFileReader::getRelativePath()
+unsigned int OBJFileReader::getNumberOfSubsets()
 {
-	return _relativePath.c_str();
+	return _materials.size();
 }
 
-DWORD OBJFileReader::addVertex(UINT position, const MeshLoader::VERTEX & vertex)
+DWORD OBJFileReader::addVertex(UINT position, const Mesh::Vertex & vertex)
 {
 	auto result = _vertices.end();
 
@@ -262,7 +259,7 @@ bool OBJFileReader::readMaterialData(const char * materialPath)
 			for (int i = 0; i < _materials.size(); i++)
 			{
 				Material* pCurMaterial = _materials.at(i);
-				if (0 == wcscmp(pCurMaterial->name, strName))
+				if (0 == pCurMaterial->name.compare(Utils::toString(strName)))
 				{
 					pMaterial = pCurMaterial;
 					break;
@@ -322,7 +319,10 @@ bool OBJFileReader::readMaterialData(const char * materialPath)
 		else if (0 == wcscmp(strCommand, L"map_Kd"))
 		{
 			// Texture
-			InFile >> pMaterial->texturePath;
+			WCHAR temp[MAX_PATH];
+			InFile >> temp;
+
+			pMaterial->texturePath = _relativePath + Utils::toString(temp);
 		}
 
 		else

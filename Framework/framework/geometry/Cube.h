@@ -11,6 +11,7 @@ public:
 	Cube();
 	~Cube();
 
+	bool init();
 	bool init(const char* filePath);
 	void draw();
 
@@ -27,10 +28,6 @@ private:
 	LPDIRECT3DDEVICE9 _device;
 	LPDIRECT3DVERTEXBUFFER9 _vertexBuffer;
 	LPDIRECT3DINDEXBUFFER9 _indicesBuffer;
-	LPDIRECT3DTEXTURE9 _texture;
-	D3DMATERIAL9 _material;
-
-	Transform* _transform;
 
 	bool initVertexBuffer();
 	bool initIndicesBuffer();
